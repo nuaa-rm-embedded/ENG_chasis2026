@@ -14,7 +14,6 @@
 #define MOUSE_ROTATE_PARA 20          //鼠标控制自转系数
 
 void chassis_pid_init(void);
-void gimbal_pid_init(void);
 void chassis_control_RC(void);
 
 void MotoTask(void const * argument);

@@ -1,5 +1,5 @@
 #include "chassis.h"
-
+#define track_speed_desire 10
 
 PidTD pid_chassis_moto[6];
 int16_t vx = 0,vy = 0,vr = 0;
@@ -21,12 +21,18 @@ void MotoTask(void const *argument)
     while (1) {
 
         chassis_control_RC();
-
-        for (int i = 0; i < 4; i++) {
+        moto_chassis[4].speed_desired=track_speed_desire;
+        moto_chassis[5].speed_desired=track_speed_desire;			
+        for (int i = 0; i < 6; i++) {
             pid_calculate(&pid_chassis_moto[i], moto_chassis[i].speed_desired, moto_chassis[i].speed_actual);
         }
         // 电机输出 chassis_moto_flag为电机标志位，为零则全电机无力
         SetMotoCurrent(&hcan2, Ahead,pid_chassis_moto[0].outPID,pid_chassis_moto[1].outPID,pid_chassis_moto[2].outPID,pid_chassis_moto[3].outPID);
+				SetMotoCurrent(&hcan2, Back,pid_chassis_moto[4].outPID,pid_chassis_moto[5].outPID,0,0);
+				/*
+				此处会使得抬升电机电流为0，目前仅考虑底盘状态，之后考虑兼容抬升机构代码
+				4，5为左右履带期望速度，目前考虑通过宏定义设置履带上的电机期望速度，还未进行3.4
+				*/
         osDelay(1);
 
 //        if (lift_inited == false && camera_lift_inited == true) {
@@ -39,15 +45,8 @@ void MotoTask(void const *argument)
 
 void chassis_pid_init(void)
 {
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 6; i++) {
         pidInit(&pid_chassis_moto[i], 0, 8000, KP_CHASSIS, KI_CHASSIS, KD_CHASSIS);
-    }
-}
-
-void gimbal_pid_init(void)
-{
-    for (int i = 4; i < 6; i++) {
-        pidInit(&pid_chassis_moto[i], 10000, 16384, KP_GIMBAL, KI_GIMBAL, KD_GIMBAL);
     }
 }
 

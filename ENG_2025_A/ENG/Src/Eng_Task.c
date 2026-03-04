@@ -62,9 +62,9 @@ void LiftTask(void const *argument)
     for (;;) {
             Arm_Lift_Ctrl();
             Camera_Lift_Ctrl();
-            SetMotoCurrent(&hcan2, Back, lift_moto_current_set[0], 0, 0, 0);
+            //SetMotoCurrent(&hcan2, Back, 0,0,lift_moto_current_set[0], 0);
             osDelay(1);
-            SetMotoCurrent(&hcan1, Back, 0, lift_moto_current_set[1], 0, 0);
+						//SetMotoCurrent(&hcan1, Back, 0, 0,0,lift_moto_current_set[1]);//这段代码与底盘运动代码不兼容，会使得底盘履带速度为0，后面考虑修改，目前先注释掉
             osDelay(1);
     }
 }
