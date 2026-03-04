@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "jointreset.h": "c",
+        "cstddef": "c",
+        "limits": "c",
+        "bsp_uart.h": "c",
+        "lift_moto_ctrl.h": "c",
+        "includes.h": "c",
+        "eng_task.h": "c",
+        "stdbool.h": "c",
+        "arm_whole_ctrl.h": "c",
+        "relay.h": "c",
+        "stdlib.h": "c",
+        "modes.h": "c",
+        "selfcheck_task.h": "c"
+    }
+}
