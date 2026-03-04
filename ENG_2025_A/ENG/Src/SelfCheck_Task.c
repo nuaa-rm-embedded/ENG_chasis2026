@@ -1,25 +1,18 @@
-//V1.5版本。
+//V1.4版本。
 /*
-#define		USB_NUC										0	//NUC，USB通信方式
-#define		CAN_M3508_LF							1	//左前轮M3508电机，CAN通信方式
-#define		CAN_M3508_RF							2	//右前轮M3508电机，CAN通信方式
-#define		CAN_M3508_LB							3	//左后轮M3508电机，CAN通信方式
-#define		CAN_M3508_RB							4	//右后轮M3508电机，CAN通信方式
-#define		CAN_M3508_FL							5	//机械臂抬升M3508电机，CAN通信方式
-#define		CAN_M3508_BL							6	//图传抬升M3508电机，CAN通信方式
-#define		CAN_M3508_LT							7	//左履带M3508电机，CAN通信方式
-#define		CAN_M3508_RT							8	//右履带M3508电机，CAN通信方式
-#define   CAN_J4340_LF              9 //左前轮J4340关节电机，CAN通信方式
-#define   CAN_J4340_RF              10 //右前轮J4340关节电机，CAN通信方式
-#define   CAN_J4340_LB              11 //左后轮J4340关节电机，CAN通信方式
-#define   CAN_J4340_RB              12 //右后轮J4340关节电机，CAN通信方式
-#define		CAN_RMD4015_yaw						13	//云台麦塔4015yaw，CAN通信方式
-#define		CAN_RMD4015_pitch					14	//云台麦塔4015pitch，CAN通信方式
-#define		UART_RC										15	//遥控器接收机，DBUS(UART)通信方式
-#define		UART_IMAGE								16	//图传链路，UART通信方式
-#define		UART_ARM_C								17	//底盘C板，UART通信方式
-#define		UART_REF									18  //常规链路，UART通信方式
-7-12未写自检方案
+USB_NUC										 0 	//NUC，USB通信方式
+CAN_M3508_LF							 1 	//左前轮M3508电机，CAN通信方式
+CAN_M3508_RF							 2 	//右前轮M3508电机，CAN通信方式
+CAN_M3508_LB							 3 	//左后轮M3508电机，CAN通信方式
+CAN_M3508_RB							 4 	//右后轮M3508电机，CAN通信方式
+CAN_M3508_FL							 5 	//机械臂抬升M3508电机，CAN通信方式
+CAN_M3508_BL							 6 	//图传抬升M3508电机，CAN通信方式
+CAN_RMD4015_yaw						 7 	//云台麦塔4015yaw，CAN通信方式
+CAN_RMD4015_pitch					 8 	//云台麦塔4015pitch，CAN通信方式
+UART_RC										 9 	//遥控器接收机，DBUS(UART)通信方式
+UART_IMAGE								 10 //图传链路，UART通信方式
+UART_ARM_C								 11 //底盘C板，UART通信方式
+UART_REF									 12 //常规链路，UART通信方式
 */
 
 #include "SelfCheck_Task.h"
@@ -31,7 +24,7 @@ extern uint8_t Break_While_ctrl;
 extern uint8_t ShiJue_mode_ctrl;
 uint8_t t_shijue_reset = 4;
 device_state device[13];
-uint16_t device_time[19] = {0};
+uint16_t device_time[13] = {0};
 uint8_t Eng_life=0;
 uint8_t last_Eng_life=1;
 extern uint8_t camera_lift_reset_flag;
@@ -52,11 +45,11 @@ void SelfCheck_mode(void const *argument)
 		if((Key_Check_Hold(&Keys.KEY_CTRL) && Key_Check_Hold(&Keys.KEY_Q))) Break_While_ctrl = 1;
 		
 		//各部位检测
-		for(int i = 0;i<=18;i++)
+		for(int i = 0;i<=12;i++)
 		{
 			device_time[i]++;
 		}
-		for(int i = 0;i<=18;i++)
+		for(int i = 0;i<=12;i++)
 		{
 			if(device_time[i]>500) device[i] = DEVICE_DISORDER;
 			else device[i] = DEVICE_NORMAL;

@@ -4,13 +4,10 @@ void UpdateMotoState(MotoStateTD *MotoState);
 void UpdateMotoAngle(MotoStateTD *MotoState);
 void SaveMotoCurrent(CAN_HandleTypeDef *hcan, uint32_t RxFifo);
 
-extern uint16_t device_time[19];
+extern uint16_t device_time[13];
 
-// 底盘六3508电机
-MotoStateTD moto_chassis[6];
-/*
-依次为0右前轮，1左前轮，2左后轮，3右后轮，4左履带，5右履带
-*/
+// 底盘四电机
+MotoStateTD moto_chassis[4];
 
 // 云台抬升两电机
 MotoStateTD moto_gimbal[2]; // 第一个是arm_lift,第二个是camera_lift
@@ -64,19 +61,8 @@ void SetMotoCurrent(CAN_HandleTypeDef *hcan, MotoGroupe group, int16_t C1, int16
 
     HAL_CAN_AddTxMessage(hcan, &Tx_Msg, TX_Data, &send_mail_box); // 将数据储存进邮箱FIFOx
 }
+
 // 保存电机反馈消息,从接收回调函数中进入此处
-
-void Control_J4340()
-	{
-		
-		
-//此处待写
-		
-}
-
-
-
-
 void SaveMotoMsg(CAN_HandleTypeDef *hcan, uint32_t RxFifo)
 {
     CAN_RxHeaderTypeDef Rx_Msg;
@@ -102,14 +88,6 @@ void SaveMotoMsg(CAN_HandleTypeDef *hcan, uint32_t RxFifo)
                 UpdateMotoState(&moto_chassis[3]);
                 break;
             case CAN_Motor5_ID:
-								device_time[CAN_M3508_LT] = 0;
-                UpdateMotoState(&moto_chassis[4]);
-                break;	
-            case CAN_Motor6_ID:
-								device_time[CAN_M3508_RT] = 0;
-                UpdateMotoState(&moto_chassis[5]);
-                break;
-            case CAN_Motor7_ID:
 								device_time[CAN_M3508_FL] = 0;
                 UpdateMotoState(&moto_gimbal[0]);
                 break;
@@ -118,7 +96,7 @@ void SaveMotoMsg(CAN_HandleTypeDef *hcan, uint32_t RxFifo)
         }
     } else if (hcan == &hcan1) {
         switch (Rx_Msg.StdId) {
-            case CAN_Motor8_ID:
+            case CAN_Motor6_ID:
 								device_time[CAN_M3508_BL] = 0;
                 UpdateMotoState(&moto_gimbal[1]);
                 break;

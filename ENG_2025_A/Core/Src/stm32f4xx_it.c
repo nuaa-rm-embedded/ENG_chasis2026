@@ -26,7 +26,7 @@
 #include "includes.h"
 extern uint8_t UART8_Rx_Buffer[UART8_RX_BUFFER_SIZE];
 extern uint8_t USART3_Rx_Buffer[USART3_RX_BUFFER_SIZE];
-extern uint16_t device_time[19];
+extern uint16_t device_time[13];
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

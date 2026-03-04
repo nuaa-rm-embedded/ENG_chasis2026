@@ -14,15 +14,14 @@ typedef enum
 typedef enum
 {
 	CAN_Motor_ALL_ID = 0x200,
-	CAN_Motor1_ID = 0x201,//CAN_M3508_RF
-	CAN_Motor2_ID = 0x202,//CAN_M3508_LF
-	CAN_Motor3_ID = 0x203,//CAN_M3508_LB
-	CAN_Motor4_ID = 0x204,//CAN_M3508_RB
-	CAN_Motor5_ID = 0x205,//CAN_M3508_LT 左履带
-	CAN_Motor6_ID = 0x206,//CAN_M3508_RT
-	CAN_Motor7_ID = 0x207,//CAN_M3508_FL
-	CAN_Motor8_ID = 0x208,//CAN_M3508_BL
-	//此处还需加两个J4340电机的ID，等J4340设置好后补写
+	CAN_Motor1_ID = 0x201,
+	CAN_Motor2_ID = 0x202,
+	CAN_Motor3_ID = 0x203,
+	CAN_Motor4_ID = 0x204,
+	CAN_Motor5_ID = 0x205,
+	CAN_Motor6_ID = 0x206,
+	CAN_Motor7_ID = 0x207,
+	CAN_Motor8_ID = 0x208,
 }CAN_Message_ID;
 
 typedef struct 
@@ -42,7 +41,7 @@ typedef struct
 	bool        first_run;//是否为第一次读取数据,用于转子角度的计算
 }MotoStateTD;
 
-extern MotoStateTD moto_chassis[6];
+extern MotoStateTD moto_chassis[4];
 extern MotoStateTD moto_gimbal[2];
 
 // can接收回调函数用
