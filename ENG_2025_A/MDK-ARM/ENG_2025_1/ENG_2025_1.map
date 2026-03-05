@@ -2109,6 +2109,8 @@ Section Cross References
     moto.o(.ARM.exidx.text.MotoStateInit) refers to moto.o(.text.MotoStateInit) for [Anonymous Symbol]
     moto.o(.text.SetMotoCurrent) refers to stm32f4xx_hal_can.o(.text.HAL_CAN_AddTxMessage) for HAL_CAN_AddTxMessage
     moto.o(.ARM.exidx.text.SetMotoCurrent) refers to moto.o(.text.SetMotoCurrent) for [Anonymous Symbol]
+    moto.o(.text.Control_J4340) refers to stm32f4xx_hal_can.o(.text.HAL_CAN_AddTxMessage) for HAL_CAN_AddTxMessage
+    moto.o(.text.Control_J4340) refers to stm32f4xx_hal.o(.text.HAL_Delay) for HAL_Delay
     moto.o(.ARM.exidx.text.Control_J4340) refers to moto.o(.text.Control_J4340) for [Anonymous Symbol]
     moto.o(.text.SaveMotoMsg) refers to moto.o(.bss..L_MergedGlobals) for .L_MergedGlobals
     moto.o(.text.SaveMotoMsg) refers to stm32f4xx_hal_can.o(.text.HAL_CAN_GetRxMessage) for HAL_CAN_GetRxMessage
@@ -5072,7 +5074,7 @@ Removing Unused input sections from the image.
     Removing moto.o(.text), (0 bytes).
     Removing moto.o(.ARM.exidx.text.MotoStateInit), (8 bytes).
     Removing moto.o(.ARM.exidx.text.SetMotoCurrent), (8 bytes).
-    Removing moto.o(.text.Control_J4340), (2 bytes).
+    Removing moto.o(.text.Control_J4340), (252 bytes).
     Removing moto.o(.ARM.exidx.text.Control_J4340), (8 bytes).
     Removing moto.o(.ARM.exidx.text.SaveMotoMsg), (8 bytes).
     Removing moto.o(.text.UpdateMotoState), (132 bytes).
@@ -5418,7 +5420,7 @@ Removing Unused input sections from the image.
     Removing usbd_cdc.o(.ARM.exidx.text.USBD_CDC_TransmitPacket), (8 bytes).
     Removing usbd_cdc.o(.ARM.exidx.text.USBD_CDC_ReceivePacket), (8 bytes).
 
-1867 unused section(s) (total 88509 bytes) removed from the image.
+1867 unused section(s) (total 88759 bytes) removed from the image.
 
 ==============================================================================
 
@@ -7791,35 +7793,35 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       220          0          0          0          0        902   arm_whole_ctrl.o
-       148          0          0          0          0       3854   bsp_can.o
-       642          0          0          0        602       7093   bsp_uart.o
+       220          0          0          0          0        884   arm_whole_ctrl.o
+       148          0          0          0          0       3948   bsp_can.o
+       642          0          0          0        602       7075   bsp_uart.o
         22          0          0          0       1028       1250   bsp_usb.o
        438          0          0          0         84       7096   can.o
-      1136         20          0          8        560       4352   chassis.o
+      1136         20          0          8        560       4336   chassis.o
        364          0          0          0       1724      43512   cmsis_os2.o
        172          0          0          0          0       3720   dma.o
-       114          0          0          4          0       1881   eng_task.o
+       114          0          0          4          0       1863   eng_task.o
        220          0        338          0         32       4643   freertos.o
        312          0          0          0          0       4360   gpio.o
        710          0          0          0      15392       5908   heap_4.o
-         0          0          0          0         24       1043   inculdes.o
-       140          0          0          0         64       2887   key.o
-      1024         40          0          0        560       4423   lift_moto_ctrl.o
+         0          0          0          0         24       1025   inculdes.o
+       140          0          0          0         64       2869   key.o
+      1024         40          0          0        560       4405   lift_moto_ctrl.o
        186          0          0          0          0       2385   list.o
-       292          0          0          0          0       6352   main.o
-     10480         32          0          1         17      13591   modes.o
-      1404         14          0          0        268       8086   moto.o
-       342          8          0          0          0       4032   pid.o
+       292          0          0          0          0       6334   main.o
+     10480         32          0          1         17      13573   modes.o
+      1404         14          0          0        268       8984   moto.o
+       342          8          0          0          0       4014   pid.o
        900         16          0          4          8       4414   port.o
         48          0          0          0          0       2318   pwm.o
       1782          0          0          0         64      30839   queue.o
-       422          0          0          0        128       1470   rcdriver.o
-       604         10          0          0        286       6521   referee.o
-       610          0          0          1          0       1081   referee_ui_task.o
-        92          0          0          0          2       1514   relay.o
+       422          0          0          0        128       1452   rcdriver.o
+       604         10          0          0        286       6503   referee.o
+       610          0          0          1          0       1063   referee_ui_task.o
+        92          0          0          0          2       1496   relay.o
        280          0          0          0       4220       5468   robot_message.o
-      1146          0          0          4         58       5111   selfcheck_task.o
+      1146          0          0          4         58       5093   selfcheck_task.o
         64         26        428          0       1536        856   startup_stm32f427xx.o
        132          0          0          8          4       7709   stm32f4xx_hal.o
       1696          6          0          0          0      14099   stm32f4xx_hal_can.o
@@ -7834,19 +7836,19 @@ Image component sizes
        190          0          0          0          0      21971   stm32f4xx_hal_tim_ex.o
        178          0          0          0         72       7463   stm32f4xx_hal_timebase_tim.o
       2802          0          0          0          0      32839   stm32f4xx_hal_uart.o
-       590          0          0          0          0      11352   stm32f4xx_it.o
+       590          0          0          0          0      11334   stm32f4xx_it.o
       5064          0          0          0          0      37561   stm32f4xx_ll_usb.o
         18          0         24          4          0       2799   system_stm32f4xx.o
       3066          8          0          0       1280      44783   tasks.o
        442          0          0          0        144       7272   tim.o
         88          8          0          0          0       1507   time.o
       1070         18          5          0        300      16661   timers.o
-      2270          0          0         52        420      18388   ui_g.o
-      1486          0        768          4         77      19045   ui_interface.o
+      2270          0          0         52        420      18370   ui_g.o
+      1486          0        768          4         77      19027   ui_interface.o
       1202          0          0          0        960       8551   usart.o
        114          0          0          0        732       3246   usb_device.o
       1162         12          0        133          0      11582   usbd_cdc.o
-       110          0          0         20       4096       5050   usbd_cdc_if.o
+       110          0          0         20       4096       5032   usbd_cdc_if.o
        784          0          0          0       1796      18574   usbd_conf.o
       1004          0          0          0          0      11200   usbd_core.o
       1646         32          0          0          1      11252   usbd_ctlreq.o
@@ -7855,7 +7857,7 @@ Image component sizes
        202          0          0          0          2       1599   wd.o
 
     ----------------------------------------------------------------------
-     60252        306       1606        332      37076     633587   Object Totals
+     60252        306       1606        332      37076     634239   Object Totals
          0          0         32          0          0          0   (incl. Generated)
        446          0          3         13         23          0   (incl. Padding)
 
@@ -7918,8 +7920,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     61594        326       1646        332      37172     633307   Grand Totals
-     61594        326       1646        332      37172     633307   ELF Image Totals
+     61594        326       1646        332      37172     633959   Grand Totals
+     61594        326       1646        332      37172     633959   ELF Image Totals
      61594        326       1646        332          0          0   ROM Totals
 
 ==============================================================================

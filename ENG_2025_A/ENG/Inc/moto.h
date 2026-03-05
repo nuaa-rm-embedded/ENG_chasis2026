@@ -22,7 +22,11 @@ typedef enum
 	CAN_Motor6_ID = 0x206,//CAN_M3508_RT
 	CAN_Motor7_ID = 0x207,//CAN_M3508_FL
 	CAN_Motor8_ID = 0x208,//CAN_M3508_BL
-	//此处还需加两个J4340电机的ID，等J4340设置好后补写
+	//此处还需加四个J4340电机的ID，等J4340设置好后补写
+	CAN1_J4340_Motor1_ID=0x301,//LF
+	CAN1_J4340_Motor2_ID=0x302,//RF
+	CAN1_J4340_Motor3_ID=0x303,//LB
+	CAN1_J4340_Motor4_ID=0x304,//RB
 }CAN_Message_ID;
 
 typedef struct 

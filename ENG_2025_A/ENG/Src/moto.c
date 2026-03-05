@@ -3,7 +3,7 @@
 void UpdateMotoState(MotoStateTD *MotoState);
 void UpdateMotoAngle(MotoStateTD *MotoState);
 void SaveMotoCurrent(CAN_HandleTypeDef *hcan, uint32_t RxFifo);
-
+void Control_J4340(CAN_HandleTypeDef *hcan,uint32_t p1,uint32_t p2,uint32_t p3,uint32_t p4);//LF,RF,LB,RB
 extern uint16_t device_time[19];
 
 // 底盘六3508电机
@@ -66,12 +66,41 @@ void SetMotoCurrent(CAN_HandleTypeDef *hcan, MotoGroupe group, int16_t C1, int16
 }
 // 保存电机反馈消息,从接收回调函数中进入此处
 
-void Control_J4340()
+void Control_J4340(CAN_HandleTypeDef *hcan,uint32_t p1,uint32_t p2,uint32_t p3,uint32_t p4)
 	{
-		
-		
-//此处待写
-		
+    uint8_t TX_Data[8];
+    uint32_t send_mail_box;
+		uint32_t v=1;
+		uint32_t motors[4]={p1,p2,p3,p4};
+    CAN_TxHeaderTypeDef Tx_Msg;
+		uint16_t motor_ids[4] = {
+        CAN1_J4340_Motor1_ID,
+        CAN1_J4340_Motor2_ID,
+        CAN1_J4340_Motor3_ID,
+        CAN1_J4340_Motor4_ID
+    };
+		Tx_Msg.ExtId = 0;
+		Tx_Msg.IDE = CAN_ID_STD;  
+    Tx_Msg.RTR = CAN_RTR_DATA; 
+    Tx_Msg.DLC = 8;            
+    for(int i = 0; i < 4; i++)
+    {
+        Tx_Msg.StdId = 0x100 + motor_ids[i];
+        
+        // 填充位置数据
+        TX_Data[0] = (motors[i]>> 0) & 0xFF;
+        TX_Data[1] = (motors[i]>> 8) & 0xFF;
+        TX_Data[2] = (motors[i]>> 16) & 0xFF;
+        TX_Data[3] = (motors[i]>> 24) & 0xFF;
+        // 使用固定速度即可
+        TX_Data[4] = (v >> 0)  & 0xFF;
+        TX_Data[5] = (v >> 8)  & 0xFF;
+        TX_Data[6] = (v >> 16) & 0xFF;
+        TX_Data[7] = (v >> 24) & 0xFF;
+        
+        HAL_CAN_AddTxMessage(hcan, &Tx_Msg, TX_Data, &send_mail_box);
+        HAL_Delay(1); 
+    }
 }
 
 

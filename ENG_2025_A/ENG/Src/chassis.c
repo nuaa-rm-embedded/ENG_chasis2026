@@ -29,10 +29,12 @@ void MotoTask(void const *argument)
         // 电机输出 chassis_moto_flag为电机标志位，为零则全电机无力
         SetMotoCurrent(&hcan2, Ahead,pid_chassis_moto[0].outPID,pid_chassis_moto[1].outPID,pid_chassis_moto[2].outPID,pid_chassis_moto[3].outPID);
 				SetMotoCurrent(&hcan2, Back,pid_chassis_moto[4].outPID,pid_chassis_moto[5].outPID,0,0);
+
 				/*
 				此处会使得抬升电机电流为0，目前仅考虑底盘状态，之后考虑兼容抬升机构代码
 				4，5为左右履带期望速度，目前考虑通过宏定义设置履带上的电机期望速度，还未进行3.4
 				*/
+				//Control_J4340(CAN_HandleTypeDef *hcan,uint32_t p1,uint32_t p2,uint32_t p3,uint32_t p4);//LF,RF,LB,RB,p1234之后再求
         osDelay(1);
 
 //        if (lift_inited == false && camera_lift_inited == true) {
