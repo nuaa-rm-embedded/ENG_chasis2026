@@ -58,4 +58,6 @@ void MotoStateInit(MotoStateTD* motostate);
 // 电机电流赋值
 void SetMotoCurrent(CAN_HandleTypeDef* hcan, MotoGroupe group, int16_t C1, int16_t C2, int16_t C3, int16_t C4);
 
+//J4340电机控制
+void Control_J4340(CAN_HandleTypeDef *hcan,uint32_t p1,uint32_t p2,uint32_t p3,uint32_t p4,uint32_t v1,uint32_t v2,uint32_t v3,uint32_t v4);
 #endif

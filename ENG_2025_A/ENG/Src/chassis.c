@@ -103,7 +103,97 @@ void chassis_control_RC(void)
 		moto_chassis[1].speed_desired = (vy + vx + vr) * chassis_speed_slow;  // 2  left front
 		moto_chassis[2].speed_desired = (vy - vx + vr) * chassis_speed_slow;  // 3	left back
 		moto_chassis[3].speed_desired = (-vy - vx + vr) * chassis_speed_slow; // 4	right back
-	}
+	}//前人习惯RF,LF,LB,RB,今人习惯LF,RF,LB,RB,待正式代码时改成前人方式好了
 }
 
-
+//上台阶动作（伪代码）
+void stair_work(){
+	uint32_t p1,p2,p3,p4,v1,v2,v3,v4;
+	v1=1;v2=1;v3=1;v4=1;//关节电机旋转速度限制
+	p1=135;p2=135;
+	p3=245;p4=245;//实际调好数值之后把常规姿态放入电机初始化过程中
+	/*
+	四个4340电机的转向角度，示意代码，以竖直向上为0度，一圈共计360度
+	常规姿态，前腿接近180度，略微往90度倾斜，后两腿接近270度，略微往180度倾斜
+	过程中履带，关节电机不动，
+	*/
+	/*
+	此处加入常规速度的控制
+	*/
+	moto_chassis[4].speed_desired=0;
+	moto_chassis[5].speed_desired=0;
+	for (int i = 0; i < 6; i++) {
+	pid_calculate(&pid_chassis_moto[i], moto_chassis[i].speed_desired, moto_chassis[i].speed_actual);
+	}
+	SetMotoCurrent(&hcan2, Ahead,pid_chassis_moto[0].outPID,pid_chassis_moto[1].outPID,pid_chassis_moto[2].outPID,pid_chassis_moto[3].outPID);
+	SetMotoCurrent(&hcan2, Back,pid_chassis_moto[4].outPID,pid_chassis_moto[5].outPID,0,0);
+  Control_J4340(&hcan1,p1,p2,p3,p4,v1,v2,v3,v4);	
+	/*
+	靠近台阶后，前腿向225度接近，脱离地面，以履带与后轮作为机器人支撑点，后腿向195度接近，使机器人重心上升
+	过程中后轮与履带电机转动，前轮电机不动
+	*/
+	p1=235;p2=235;
+	p3=195;p4=195;
+	moto_chassis[0].speed_desired=0;
+	moto_chassis[1].speed_desired=0;
+	moto_chassis[2].speed_desired=10;
+	moto_chassis[3].speed_desired=10;//仅代表速度方向为车运动正方向，大小仅代表相对速度
+	moto_chassis[4].speed_desired=10;
+	moto_chassis[5].speed_desired=10;
+	for (int i = 0; i < 6; i++) {
+	pid_calculate(&pid_chassis_moto[i], moto_chassis[i].speed_desired, moto_chassis[i].speed_actual);
+	}
+	SetMotoCurrent(&hcan2, Ahead,pid_chassis_moto[0].outPID,pid_chassis_moto[1].outPID,pid_chassis_moto[2].outPID,pid_chassis_moto[3].outPID);
+	SetMotoCurrent(&hcan2, Back,pid_chassis_moto[4].outPID,pid_chassis_moto[5].outPID,0,0);
+	Control_J4340(&hcan1,p1,p2,p3,p4,v1,v2,v3,v4);	
+	/*
+	机器人前腿碰到台阶后，前腿慢慢向270水平方向靠近，后腿往175度方向接近，再度上升重心，前支点慢慢由履带转变为前轮，
+	过程中履带与前轮主要提供动力，后轮为辅佐
+	*/
+	p1=270;p2=270;
+	p3=175;p4=175;
+	moto_chassis[0].speed_desired=10;
+	moto_chassis[1].speed_desired=10;
+	moto_chassis[2].speed_desired=5;
+	moto_chassis[3].speed_desired=5;
+	moto_chassis[4].speed_desired=10;
+	moto_chassis[5].speed_desired=10;
+	for (int i = 0; i < 6; i++) {
+	pid_calculate(&pid_chassis_moto[i], moto_chassis[i].speed_desired, moto_chassis[i].speed_actual);
+	}
+	SetMotoCurrent(&hcan2, Ahead,pid_chassis_moto[0].outPID,pid_chassis_moto[1].outPID,pid_chassis_moto[2].outPID,pid_chassis_moto[3].outPID);
+	SetMotoCurrent(&hcan2, Back,pid_chassis_moto[4].outPID,pid_chassis_moto[5].outPID,0,0);
+	Control_J4340(&hcan1,p1,p2,p3,p4,v1,v2,v3,v4);	
+	/*
+	机器人完全登上第一段台阶后，后轮腿悬空，后腿向290度方向接近，后续上台阶过程中无参与，
+	机器人前支点为前轮，后支点为履带，前进至履带接触第二级台阶
+	履带大力转动，前轮作辅助，上第二级台阶，
+	*/
+	p1=255;p2=255;
+	p3=290;p4=290;
+	moto_chassis[0].speed_desired=10;
+	moto_chassis[1].speed_desired=10;
+	moto_chassis[2].speed_desired=0;
+	moto_chassis[3].speed_desired=0;
+	moto_chassis[4].speed_desired=15;
+	moto_chassis[5].speed_desired=15;
+	for (int i = 0; i < 6; i++) {
+	pid_calculate(&pid_chassis_moto[i], moto_chassis[i].speed_desired, moto_chassis[i].speed_actual);
+	}
+	SetMotoCurrent(&hcan2, Ahead,pid_chassis_moto[0].outPID,pid_chassis_moto[1].outPID,pid_chassis_moto[2].outPID,pid_chassis_moto[3].outPID);
+	SetMotoCurrent(&hcan2, Back,pid_chassis_moto[4].outPID,pid_chassis_moto[5].outPID,0,0);
+	Control_J4340(&hcan1,p1,p2,p3,p4,v1,v2,v3,v4);
+	//台阶上完，恢复正常姿态
+	p1=235;p2=235;
+	p3=195;p4=195;
+	//省略速度
+	//......
+	/*
+	可精简代码
+		for (int i = 0; i < 6; i++) {
+	pid_calculate(&pid_chassis_moto[i], moto_chassis[i].speed_desired, moto_chassis[i].speed_actual);
+	}
+	SetMotoCurrent(&hcan2, Ahead,pid_chassis_moto[0].outPID,pid_chassis_moto[1].outPID,pid_chassis_moto[2].outPID,pid_chassis_moto[3].outPID);
+	SetMotoCurrent(&hcan2, Back,pid_chassis_moto[4].outPID,pid_chassis_moto[5].outPID,0,0);
+	*/
+}

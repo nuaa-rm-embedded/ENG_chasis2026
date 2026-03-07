@@ -3,7 +3,7 @@
 void UpdateMotoState(MotoStateTD *MotoState);
 void UpdateMotoAngle(MotoStateTD *MotoState);
 void SaveMotoCurrent(CAN_HandleTypeDef *hcan, uint32_t RxFifo);
-void Control_J4340(CAN_HandleTypeDef *hcan,uint32_t p1,uint32_t p2,uint32_t p3,uint32_t p4);//LF,RF,LB,RB
+void Control_J4340(CAN_HandleTypeDef *hcan,uint32_t p1,uint32_t p2,uint32_t p3,uint32_t p4,uint32_t v1,uint32_t v2,uint32_t v3,uint32_t v4);//LF,RF,LB,RB
 extern uint16_t device_time[19];
 
 // 底盘六3508电机
@@ -66,7 +66,7 @@ void SetMotoCurrent(CAN_HandleTypeDef *hcan, MotoGroupe group, int16_t C1, int16
 }
 // 保存电机反馈消息,从接收回调函数中进入此处
 
-void Control_J4340(CAN_HandleTypeDef *hcan,uint32_t p1,uint32_t p2,uint32_t p3,uint32_t p4)
+void Control_J4340(CAN_HandleTypeDef *hcan,uint32_t p1,uint32_t p2,uint32_t p3,uint32_t p4,uint32_t v1,uint32_t v2,uint32_t v3,uint32_t v4)
 	{
     uint8_t TX_Data[8];
     uint32_t send_mail_box;
@@ -151,7 +151,22 @@ void SaveMotoMsg(CAN_HandleTypeDef *hcan, uint32_t RxFifo)
 								device_time[CAN_M3508_BL] = 0;
                 UpdateMotoState(&moto_gimbal[1]);
                 break;
-			
+            case CAN1_J4340_Motor1_ID://CAN1通信的滤波器还没改
+								device_time[CAN_J4340_LF] = 0;
+                //UpdateMotoState(&moto_gimbal[1]);//还没写存储J4340信息的结构体，看需要多少信息具体
+                break;
+            case CAN1_J4340_Motor2_ID:
+								device_time[CAN_J4340_RF] = 0;
+                //UpdateMotoState(&moto_gimbal[1]);
+                break;
+            case CAN1_J4340_Motor3_ID:
+								device_time[CAN_J4340_LB] = 0;
+                //UpdateMotoState(&moto_gimbal[1]);
+                break;
+            case CAN1_J4340_Motor4_ID:
+								device_time[CAN_J4340_RB] = 0;
+                //UpdateMotoState(&moto_gimbal[1]);
+                break;						
             default:
                 break;
         }
