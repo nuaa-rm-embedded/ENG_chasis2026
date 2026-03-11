@@ -115,6 +115,10 @@ void Robot_Custom_Data_Transmit(void)
 
     memcpy(Transmit_buff, &frame, 39);
     HAL_UART_Transmit_DMA(&huart3, Transmit_buff, 39);
+	
+	
+	
+	
 }
 
 void Robot_Custom_Data_Transmit_Init(void)

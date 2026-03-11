@@ -10,6 +10,7 @@
       <TargetName>ENG_2025_1</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <pArmCC>6240000::V6.24::ARMCLANG</pArmCC>
       <pCCUsed>6240000::V6.24::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
@@ -945,6 +946,11 @@
               <FileType>1</FileType>
               <FilePath>..\ENG\Src\pwm.c</FilePath>
             </File>
+            <File>
+              <FileName>math_user.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\ENG\Src\math_user.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -989,6 +995,11 @@
               <FileName>MTMotoDriver.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\ENG\Inc\MTMotoDriver.h</FilePath>
+            </File>
+            <File>
+              <FileName>DMMotoDriver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\ENG\Src\DMMotoDriver.c</FilePath>
             </File>
           </Files>
         </Group>

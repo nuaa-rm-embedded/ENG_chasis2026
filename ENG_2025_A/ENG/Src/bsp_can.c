@@ -3,7 +3,7 @@
 void can_filter_init(void)
 {
 
-    CAN_FilterTypeDef CAN_FilterInitStructure_can1_fifo0; // 接收摄像头抬升和图传云台脉塔电机消息
+		CAN_FilterTypeDef CAN_FilterInitStructure_can1_fifo0; // 接收摄像头抬升和图传云台脉塔电机消息，接受底盘关节电机信息
     CAN_FilterTypeDef CAN_FilterInitStructure_can2_fifo1; // 接收底盘和机械臂抬升消息
 
     CAN_FilterInitStructure_can1_fifo0.FilterActivation     = ENABLE;                // 使能过滤器

@@ -5,7 +5,7 @@ PidTD pid_chassis_moto[6];
 int16_t vx = 0,vy = 0,vr = 0;
 int16_t chassis_auto_ctrl_vy = 0;
 uint8_t chassis_auto_ctrl_flag = 0;
-
+uint8_t x=1;
 extern bool lift_inited;
 extern bool camera_lift_inited;
 extern PidTD camera_pid_lift_reset_spd;
@@ -19,7 +19,7 @@ void MotoTask(void const *argument)
 {
     chassis_pid_init();
     while (1) {
-
+        x++;
         chassis_control_RC();
         moto_chassis[4].speed_desired=track_speed_desire;
         moto_chassis[5].speed_desired=track_speed_desire;			
@@ -80,8 +80,8 @@ void chassis_control_RC(void)
 	
 	if(Yaw_Flag == CAMERA_YAW_FORWARD && frame.data.mode != 2)
 	{
-		moto_chassis[0].speed_desired = (-vy + vx + vr) * chassis_speed_coefficient; // 1  right front
-		moto_chassis[1].speed_desired = (vy + vx + vr) * chassis_speed_coefficient;  // 2  left front
+		moto_chassis[0].speed_desired = (vy + vx + vr) * chassis_speed_coefficient;  // 1  left front
+		moto_chassis[1].speed_desired = (-vy + vx + vr) * chassis_speed_coefficient; // 2  right front
 		moto_chassis[2].speed_desired = (vy - vx + vr) * chassis_speed_coefficient;  // 3	left back
 		moto_chassis[3].speed_desired = (-vy - vx + vr) * chassis_speed_coefficient; // 4	right back
 	}
@@ -91,19 +91,19 @@ void chassis_control_RC(void)
 		vx = -vx;
 		vy = -vy;
 		
-		moto_chassis[0].speed_desired = (-vy + vx + vr) * chassis_speed_coefficient; // 1  right front
-		moto_chassis[1].speed_desired = (vy + vx + vr) * chassis_speed_coefficient;  // 2  left front
+		moto_chassis[0].speed_desired = (vy + vx + vr) * chassis_speed_coefficient;  // 1  left front
+		moto_chassis[1].speed_desired = (-vy + vx + vr) * chassis_speed_coefficient; // 2  right front
 		moto_chassis[2].speed_desired = (vy - vx + vr) * chassis_speed_coefficient;  // 3	left back
 		moto_chassis[3].speed_desired = (-vy - vx + vr) * chassis_speed_coefficient; // 4	right back
 	}
 	
 	else if(Yaw_Flag == CAMERA_YAW_FORWARD && frame.data.mode == 2) 
 	{
-		moto_chassis[0].speed_desired = (-vy + vx + vr) * chassis_speed_slow; // 1  right front
-		moto_chassis[1].speed_desired = (vy + vx + vr) * chassis_speed_slow;  // 2  left front
+		moto_chassis[0].speed_desired = (vy + vx + vr) * chassis_speed_slow;  // 1  left front
+		moto_chassis[1].speed_desired = (-vy + vx + vr) * chassis_speed_slow; // 2  right front
 		moto_chassis[2].speed_desired = (vy - vx + vr) * chassis_speed_slow;  // 3	left back
 		moto_chassis[3].speed_desired = (-vy - vx + vr) * chassis_speed_slow; // 4	right back
-	}//前人习惯RF,LF,LB,RB,今人习惯LF,RF,LB,RB,待正式代码时改成前人方式好了
+	}
 }
 
 //上台阶动作（伪代码）

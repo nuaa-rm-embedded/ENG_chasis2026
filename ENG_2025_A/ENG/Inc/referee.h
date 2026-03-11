@@ -290,6 +290,7 @@ typedef struct __packed//0x0309  //机器人发送数据至自定义控制器 30
 //  新工程自定义控制器数据
 typedef struct __packed
 {
+
 	uint8_t lift_flag; // 0为不动,1为上,2为下
 	float yaw1;
 	float pitch1;
@@ -299,6 +300,18 @@ typedef struct __packed
 	uint8_t roll2_flag; // 0为不动,1为正转,2为反转
 	uint8_t pump_flag;	// 1为开,0为关
 	uint8_t undefine[7];
+//  uint16_t lift
+//	uint16_t yaw1;
+//	uint16_t yaw2;
+//  uint16_t yaw3;
+//	uint16_t pitch1;
+//	uint16_t pitch2;
+//	uint16_t roll;
+//  uint16_t gripper;
+//	uint8_t arm_mode;
+//	uint8_t roll2_flag; // 0为不动,1为正转,2为反转
+//	uint8_t pump_flag;	// 1为开,0为关
+//把发送给工程自定义控制器的数据转成p15_t,未完成
 } custom_controller_t;
 
 typedef struct __packed
