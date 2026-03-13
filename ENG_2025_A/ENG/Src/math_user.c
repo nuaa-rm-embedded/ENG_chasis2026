@@ -1,5 +1,8 @@
 #include "math_user.h"
+typedef int16_t q15;
 
+#define INPUT_RANGE 500.0f
+#define Q15_SCALE 32768.0f
 /**
 ************************************************************************
 * @brief:      	float_to_uint: 浮点数转换为无符号整数函数
@@ -37,5 +40,11 @@ float uint_to_float(int x_int, float x_min, float x_max, int bits)
 	return ((float)x_int)*span/((float)((1<<bits)-1)) + offset;
 }
 
-
-
+q15 float_to_q15(float input) {
+    if (input > 500.0f) input = 500.0f;
+    if (input < -500.0f) input = -500.0f;
+    return (q15_t)((input / INPUT_RANGE) * Q15_SCALE + 0.5f);
+}
+float q15_to_float(q15_t input) {
+    return (float)input * INPUT_RANGE / Q15_SCALE;
+}

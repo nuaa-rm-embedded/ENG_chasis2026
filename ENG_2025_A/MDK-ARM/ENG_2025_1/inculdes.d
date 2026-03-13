@@ -58,4 +58,5 @@ eng_2025_1/inculdes.o: ..\ENG\Src\Inculdes.c ..\ENG\Inc\Includes.h \
   ..\ENG\Inc\modes.h ..\ENG\Inc\RcDriver.h ..\ENG\Inc\Key.h \
   ..\ENG\Inc\chassis.h ..\ENG\Inc\referee.h ..\ENG\Inc\wd.h \
   ..\ENG\Inc\lift_moto_ctrl.h ..\ENG\Inc\Arm_Whole_Ctrl.h \
-  ..\ENG\Inc\relay.h ..\ENG\Inc\SelfCheck_Task.h
+  ..\ENG\Inc\relay.h ..\ENG\Inc\SelfCheck_Task.h \
+  ..\ENG\Inc\DMMotoDriver.h ..\ENG\Inc\math_user.h

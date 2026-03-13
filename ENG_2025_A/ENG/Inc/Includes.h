@@ -48,6 +48,7 @@
 #include "Arm_Whole_Ctrl.h"
 #include "relay.h"
 #include "SelfCheck_Task.h"
+#include "DMMotoDriver.h"
 
 //typedef struct RobotTD
 //{

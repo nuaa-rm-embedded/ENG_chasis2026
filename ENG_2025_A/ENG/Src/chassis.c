@@ -18,6 +18,7 @@ float chassis_speed_slow = 0.6f;
 void MotoTask(void const *argument)
 {
     chassis_pid_init();
+		dm_ctrl_init();
     while (1) {
         x++;
         chassis_control_RC();

@@ -27,7 +27,7 @@ void DMSetMoto_speed_and_position_single(DM_CAN_Ctrl_ID motor_can_ID, float angl
 	TX_Data[6] = *((uint8_t *)(&max_speed) + 2);
 	TX_Data[7] = *((uint8_t *)(&max_speed) + 3);
 
-	if(motor_can_ID == DM_Motor4_can_ID) HAL_CAN_AddTxMessage(&hcan2, &canTxHeader, TX_Data, &send_mail_box);
+	if(motor_can_ID == DM_Motor4_can_ID) HAL_CAN_AddTxMessage(&hcan2, &canTxHeader, TX_Data, &send_mail_box);//要改一行，看can分配
 	else HAL_CAN_AddTxMessage(&DM_MOTO_CAN_HANDEL, &canTxHeader, TX_Data, &send_mail_box);
 }
 
@@ -220,4 +220,19 @@ void DMUpdateMotoState(DMMotoStateTD *state)
 	//  vofa_send_data[0] = DMMotoState[0].speed;
 	//  vofa_send_data[1] = DM1_position_pid.outPID;
 //	my_vofa_printf(2);
+}
+void dm_ctrl_init(void)
+{
+
+    DM_Enable(DM_Motor1_can_ID, DM_Position_Speed_Mode);
+    osDelay(1);
+    DM_Enable(DM_Motor2_can_ID, DM_Position_Speed_Mode);
+    osDelay(1);
+    DM_Enable(DM_Motor3_can_ID, DM_Position_Speed_Mode);
+    osDelay(1);
+    DM_Enable(DM_Motor4_can_ID, DM_Position_Speed_Mode);
+    osDelay(1);
+
+    // 达妙电机去到标准位置
+//    DM_Moto_reset();
 }

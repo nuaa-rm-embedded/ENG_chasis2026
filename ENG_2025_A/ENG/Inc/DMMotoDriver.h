@@ -16,22 +16,19 @@
 // 达妙电机can_ID(控制帧)
 typedef enum
 {
-    // 末端依次向上
-    DM_Motor1_can_ID = 0x00,
-    DM_Motor2_can_ID = 0x01,
-    DM_Motor3_can_ID = 0x02,
-    DM_Motor4_can_ID = 0x03,
-    DM_Motor5_can_ID = 0x04,
+    DM_Motor1_can_ID = 0x01,//LF
+    DM_Motor2_can_ID = 0x02,//RF
+    DM_Motor3_can_ID = 0x03,//LB
+    DM_Motor4_can_ID = 0x04,//RB
 } DM_CAN_Ctrl_ID;
 
 // 达妙电机master_ID(反馈帧)
 typedef enum
 {
-    DM_Motor1_master_ID = 0x10,
-    DM_Motor2_master_ID = 0x11,
-    DM_Motor3_master_ID = 0x12,
-    DM_Motor4_master_ID = 0x13,
-    DM_Motor5_master_ID = 0x14,
+    DM_Motor1_master_ID = 0x01,//后续限位时+0x10,以辨别
+    DM_Motor2_master_ID = 0x02,
+    DM_Motor3_master_ID = 0x03,
+    DM_Motor4_master_ID = 0x04,
 
 } DM_CAN_Msg_ID;
 
@@ -73,5 +70,5 @@ void DM_Disable(DM_CAN_Ctrl_ID motor_can_ID,DM_Mode_ID Mode);
 
 void DM_SaveMotoMsg(CAN_HandleTypeDef *hcan, uint32_t RxFifo);
 void DMUpdateMotoState(DMMotoStateTD *state);
-
+void dm_ctrl_init();
 #endif
